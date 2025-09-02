@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 function UserDashboard() {
   const { api, user, fetchUserProfile } = useContext(AppContext);
-
   const [ChangeAvatar, SetChangeAvater] = useState(null);
   const [UserData, SetUserData] = useState(user);
 
@@ -63,8 +62,6 @@ function UserDashboard() {
 
       toast.success(res.data.message || "Avatar changed successfully");
       SetChangeAvater(null);
-
-      
       await fetchUserProfile();
       SetUserData((prev) => ({ ...prev, avatar: res.data.avatar }));
     } catch (error) {
@@ -75,28 +72,28 @@ function UserDashboard() {
   return (
     <>
       {UserData && (
-        <div className="flex flex-col">
-          <div className="flex items-center gap-12">
-            <div>
-              <div className="size-[20vh] border rounded-full">
+        <div className="flex flex-col px-4 sm:px-6 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+            <div className="flex flex-col items-center md:items-start">
+              <div className="size-32 md:size-[20vh] border rounded-full overflow-hidden">
                 <label
-                  className="w-[100%] h-[100%] flex items-center justify-center"
+                  className="w-full h-full flex items-center justify-center cursor-pointer"
                   htmlFor="img-file"
                 >
                   {ChangeAvatar ? (
                     <img
                       src={URL.createObjectURL(ChangeAvatar)}
                       alt=""
-                      className="size-[100%] object-cover rounded-full"
+                      className="w-full h-full object-cover rounded-full"
                     />
                   ) : UserData.avatar ? (
                     <img
                       src={UserData.avatar}
                       alt=""
-                      className="size-[100%] object-cover rounded-full"
+                      className="w-full h-full object-cover rounded-full"
                     />
                   ) : (
-                    <FaUser className="size-[12vh] text-zinc-800" />
+                    <FaUser className="text-5xl md:text-[12vh] text-zinc-800" />
                   )}
                 </label>
               </div>
@@ -109,7 +106,7 @@ function UserDashboard() {
                   onChange={(e) => SetChangeAvater(e.target.files[0])}
                 />
                 <button
-                  className="bg-blue-700 text-white text-center px-4 py-2 rounded hover:bg-blue-900 transition-all duration-300"
+                  className="bg-blue-700 text-white px-4 py-2 text-sm md:text-base rounded hover:bg-blue-900 transition-all duration-300"
                   onClick={updateAvatar}
                   type="button"
                 >
@@ -117,17 +114,21 @@ function UserDashboard() {
                 </button>
               </div>
             </div>
-            <div>
-              <p className="text-zinc-700">{UserData.email}</p>
-              <h2 className="text-4xl mt-2 font-semibold">{UserData.username}</h2>
+            <div className="text-center md:text-left">
+              <p className="text-zinc-700 break-words">{UserData.email}</p>
+              <h2 className="text-2xl md:text-4xl mt-2 font-semibold break-words">
+                {UserData.username}
+              </h2>
             </div>
           </div>
-          <hr className="my-8 " />
+          <hr className="my-6 md:my-8" />
           <div>
-            <h1 className="text-2xl font-semibold">Change Account's Password</h1>
-            <form className="my-4" onSubmit={handlePasswordChange}>
+            <h1 className="text-xl md:text-2xl font-semibold">
+              Change Account's Password
+            </h1>
+            <form className="my-4 space-y-4" onSubmit={handlePasswordChange}>
               <div className="flex flex-col">
-                <label>Current Password</label>
+                <label className="text-sm md:text-base">Current Password</label>
                 <input
                   type="password"
                   name="password"
@@ -137,8 +138,8 @@ function UserDashboard() {
                   onChange={changePas}
                 />
               </div>
-              <div className="flex flex-col mt-4">
-                <label>New Password</label>
+              <div className="flex flex-col">
+                <label className="text-sm md:text-base">New Password</label>
                 <input
                   type="password"
                   name="newPassword"
@@ -148,8 +149,10 @@ function UserDashboard() {
                   onChange={changePas}
                 />
               </div>
-              <div className="flex flex-col mt-4">
-                <label>Confirm New Password</label>
+              <div className="flex flex-col">
+                <label className="text-sm md:text-base">
+                  Confirm New Password
+                </label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -159,8 +162,8 @@ function UserDashboard() {
                   onChange={changePas}
                 />
               </div>
-              <div className="mt-4">
-                <button className="bg-blue-700 text-white text-center px-4 py-2 rounded hover:bg-blue-900 transition-all duration-300">
+              <div>
+                <button className="bg-blue-700 w-full sm:w-auto text-white px-4 py-2 rounded hover:bg-blue-900 transition-all duration-300">
                   Update Password
                 </button>
               </div>
